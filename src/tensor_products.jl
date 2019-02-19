@@ -130,6 +130,11 @@ end
 
 const ⊗ = otimes
 
+@inline function otimesu(S1::Tensor{2, dim}, S2::Tensor{2, dim}) where {dim}
+    TensorType = getreturntype(otimes, get_base(typeof(S1)), get_base(typeof(S2)))
+    TensorType(@inline function(i,j,k,l) @inbounds S1[i,k] * S2[j,l]; end)
+end
+
 """
     otimes(::Vec)
 
